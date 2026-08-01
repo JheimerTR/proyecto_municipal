@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sistema</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Frontend_Dashboard.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-color: #f4f6f9;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background-color: #212529;
+            color: white;
+        }
+
+            #sidebar a {
+                color: #c2c7d0;
+                text-decoration: none;
+                padding: 12px 20px;
+                display: block;
+                border-bottom: 1px solid #4f5962;
+                transition: 0.2s;
+            }
+
+                #sidebar a:hover {
+                    background-color: #495057;
+                    color: white;
+                    border-left: 4px solid #0d6efd;
+                }
+
+        #page-content-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #top-navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menú Lateral -->
+    <div id="sidebar" class="d-flex flex-column">
+        <div class="p-4 text-center border-bottom border-secondary">
+            <h5 class="text-white m-0">Panel de Control</h5>
+        </div>
+        <div class="list-group list-group-flush mt-2">
+            <a href="/Home" id="menuInicio">Inicio</a>
+            <a href="/Curso" id="menuCursos">Cursos</a>
+            <a href="/Usuario" id="menuUsuarios">Usuarios</a>
+            <a href="/Tutor" id="menuTutores">Tutores</a>
+            <a href="/Participante" id="menuParticipantes">Participantes</a>
+            <a href="/EspacioFisico" id="menuEspacios">Espacios Físicos</a>
+            <a href="/Horario" id="menuHorarios">Horarios</a>
+            <a href="/Incidente" id="menuIncidentes">Incidentes</a>
+            <a href="/Asistencia" id="menuAsistencias">Asistencias</a>
+            <a href="/Inscripcion" id="menuInscripciones">Inscripciones</a>
+        </div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div id="page-content-wrapper">
+
+        <!-- Barra Superior -->
+        <nav id="top-navbar" class="navbar navbar-expand-lg px-4 py-3">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h4 fw-bold">@ViewData["Title"]</span>
+                <div class="ms-auto d-flex align-items-center">
+                    <span class="me-3 text-secondary">Bienvenido, <strong id="etiquetaNombreUsuario">Cargando...</strong></span>
+                    <!-- Botón Salir con la función de JavaScript conectada -->
+                    <a href="#" onclick="cerrarSesion()" class="btn btn-outline-danger btn-sm">Salir</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Área de Trabajo -->
+        <div class="container-fluid p-4">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. Leemos el rol y el nombre del almacenamiento local
+            const rolActual = localStorage.getItem("rolUsuario");
+            const nombreActual = localStorage.getItem("nombreUsuario");
+
+            // 2. Si no hay rol (entró sin loguearse), lo pateamos al Login
+            if (!rolActual) {
+                window.location.replace("/Login");
+                return;
+            }
+
+            // 3. Inyectamos el nombre real en el HTML
+            if (nombreActual) {
+                document.getElementById("etiquetaNombreUsuario").innerText = nombreActual + " (" + rolActual + ")";
+            }
+
+            // 4. Lógica de ocultamiento según el rol
+            if (rolActual === "Instructor") {
+                // Apagamos TODO lo que el instructor NO debe ver en el menú lateral
+                document.getElementById("menuCursos").style.display = "none";
+                document.getElementById("menuUsuarios").style.display = "none";
+                document.getElementById("menuInscripciones").style.display = "none";
+                document.getElementById("menuTutores").style.display = "none";
+                document.getElementById("menuEspacios").style.display = "none";
+                document.getElementById("menuHorarios").style.display = "none";
+            }
+            else if (rolActual === "Secretaria") {
+                // La secretaria NO ve gestión de usuarios del sistema
+                document.getElementById("menuUsuarios").style.display = "none";
+            }
+            // Si es "Admin", el código no hace nada y deja todo visible.
+        });
+
+        // 5. Función para cerrar sesión limpiamente
+        function cerrarSesion() {
+            localStorage.removeItem("rolUsuario");
+            localStorage.removeItem("nombreUsuario");
+            window.location.replace("/Login");
+        }
+    </script>
+</body>
+</html>

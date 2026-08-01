@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Inscripciones";
+}
+
+<div style="margin-top: 20px;">
+    <h2 class="mb-4">Gestión de Inscripciones</h2>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <input type="hidden" id="txtId" value="0" />
+
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">ID Participante:</label>
+                    <input type="number" id="txtParticipanteID" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">ID Curso:</label>
+                    <input type="number" id="txtCursoID" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Fecha:</label>
+                    <input type="date" id="txtFecha" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Estado:</label>
+                    <select id="txtEstado" class="form-select">
+                        <option value="Activa">Activa</option>
+                        <option value="Inactiva">Inactiva</option>
+                        <option value="Pendiente">Pendiente</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12 mt-4">
+                    <button type="button" class="btn btn-primary me-2" onclick="Guardar(event)">Guardar / Actualizar</button>
+                    <button type="button" class="btn btn-secondary" onclick="LimpiarFormulario()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover" style="width: 100%; text-align: left;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>ID Participante</th>
+                <th>ID Curso</th>
+                <th>Fecha Inscripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-datos"></tbody>
+    </table>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rolSeguridad = localStorage.getItem("rolUsuario");
+
+        // Si no es ni Admin ni Secretaria, para afuera
+        if (rolSeguridad !== "Admin" && rolSeguridad !== "Secretaria") {
+            window.location.replace("/Home");
+        }
+    });
+</script>
+@section Scripts {
+    <script src="~/js/inscripcion.js?v=2"></script>
+}

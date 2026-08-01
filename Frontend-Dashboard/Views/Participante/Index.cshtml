@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Participantes";
+}
+
+<div style="margin-top: 20px;">
+    <h2 class="mb-4">Gestión de Participantes</h2>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <input type="hidden" id="txtId" value="0" />
+
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">ID Tutor:</label>
+                    <input type="number" id="txtTutorID" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">CI:</label>
+                    <input type="text" id="txtIdentificacion" class="form-control" placeholder="Carnet de Identidad" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Nombre Completo:</label>
+                    <input type="text" id="txtNombre" class="form-control" placeholder="Nombre del participante" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Nacimiento:</label>
+                    <input type="date" id="txtFechaNacimiento" class="form-control" />
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <label class="form-label fw-bold">Alergias (Opcional):</label>
+                    <input type="text" id="txtAlergias" class="form-control" placeholder="Ninguna" />
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label class="form-label fw-bold">Contacto Emergencia (Nombre):</label>
+                    <input type="text" id="txtContactoEmergenciaNombre" class="form-control" placeholder="Nombre del familiar" />
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label class="form-label fw-bold">Teléfono Emergencia:</label>
+                    <input type="text" id="txtContactoEmergenciaTelefono" class="form-control" placeholder="Ej. 70000000" />
+                </div>
+
+                <div class="col-md-12 mt-4 text-end">
+                    <button type="button" class="btn btn-primary me-2" onclick="Guardar(event)">Guardar / Actualizar</button>
+                    <button type="button" class="btn btn-secondary" onclick="LimpiarFormulario()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover" style="width: 100%; text-align: left;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>ID Tutor</th>
+                <th>CI</th>
+                <th>Nombre</th>
+                <th>Nacimiento</th>
+                <th>Alergias</th>
+                <th>Contacto Emerg.</th>
+                <th>Tel. Emerg.</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-datos"></tbody>
+    </table>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rolSeguridad = localStorage.getItem("rolUsuario");
+
+        // Si no hay ningún rol guardado (no pasó por el Login), lo pateamos
+        if (!rolSeguridad) {
+            window.location.replace("/Login");
+        }
+    });
+</script>
+@section Scripts {
+    <script src="~/js/participante.js?v=2"></script>
+}

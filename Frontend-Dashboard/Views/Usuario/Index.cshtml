@@ -1,0 +1,97 @@
+﻿<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Tarjeta del Formulario -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0" id="tituloFormulario">Nuevo Usuario</h5>
+                </div>
+                <div class="card-body">
+                    <form id="frmUsuario">
+                        <input type="hidden" id="txtUsuarioID" value="0">
+
+                        <div class="mb-3">
+                            <label class="form-label">Usuario (Red)</label>
+                            <input type="text" class="form-control" id="txtUsuarioRed" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="txtContrasena" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="txtNombreCompleto" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Rol</label>
+                            <select class="form-select" id="cboRol" required>
+                                <option value="">Seleccione...</option>
+                                <option value="Admin">Administrador</option>
+                                <option value="Secretaria">Secretaria</option>
+                                <option value="Instructor">Instructor</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Estado</label>
+                            <select class="form-select" id="cboActivo">
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <button type="button" class="btn btn-secondary" onclick="limpiarFormulario()">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta de la Tabla -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Lista de Usuarios</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbUsuarios">
+                                <!-- Llenado por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rolSeguridad = localStorage.getItem("rolUsuario");
+
+        // Si no es el Admin, para afuera
+        if (rolSeguridad !== "Admin") {
+            window.location.replace("/Home");
+        }
+    });
+</script>
+
+@section Scripts {
+    <script src="~/js/usuarios.js" asp-append-version="true"></script>
+}

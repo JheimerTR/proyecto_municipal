@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container-fluid mt-2">
+
+    <!-- BANNER DE BIENVENIDA -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0 bg-primary text-white" style="background: linear-gradient(45deg, #0d6efd, #00d2ff) !important;">
+                <div class="card-body p-4">
+                    <h2 class="fw-bold mb-1">¡Bienvenido al Sistema de Gestión!</h2>
+                    <p class="mb-0 fs-5">Aquí tienes un resumen rápido de la actividad del instituto.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TARJETAS DE ESTADÍSTICAS (KPIs) -->
+    <div class="row g-4 mb-4">
+
+        <!-- Tarjeta 1: Cursos -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-start border-4 border-primary h-100">
+                <div class="card-body text-center py-4">
+                    <h6 class="text-muted fw-bold text-uppercase mb-2">Cursos Activos</h6>
+                    <h2 class="fw-bold text-primary mb-0 display-5">12</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2: Participantes -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-start border-4 border-success h-100">
+                <div class="card-body text-center py-4">
+                    <h6 class="text-muted fw-bold text-uppercase mb-2">Participantes</h6>
+                    <h2 class="fw-bold text-success mb-0 display-5">145</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3: Tutores -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-start border-4 border-warning h-100">
+                <div class="card-body text-center py-4">
+                    <h6 class="text-muted fw-bold text-uppercase mb-2">Tutores Registrados</h6>
+                    <h2 class="fw-bold text-warning mb-0 display-5">24</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 4: Incidentes -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-start border-4 border-danger h-100">
+                <div class="card-body text-center py-4">
+                    <h6 class="text-muted fw-bold text-uppercase mb-2">Incidentes Hoy</h6>
+                    <h2 class="fw-bold text-danger mb-0 display-5">3</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SECCIÓN EXTRA (Opcional: Para poner accesos directos o información futura) -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white fw-bold py-3">
+                    Accesos Rápidos
+                </div>
+                <div class="card-body p-4 d-grid gap-3">
+                    <a href="/Curso" class="btn btn-outline-primary text-start">📚 Gestionar Cursos</a>
+                    <a href="/Participante" class="btn btn-outline-success text-start">👤 Registrar Nuevo Participante</a>
+                    <a href="/Horario" class="btn btn-outline-secondary text-start">🕒 Configurar Horarios</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white fw-bold py-3">
+                    Avisos del Sistema
+                </div>
+                <div class="card-body p-4 text-muted d-flex align-items-center justify-content-center">
+                    <p class="mb-0 text-center">
+                        <span class="fs-1 d-block mb-2">✅</span>
+                        Todos los servicios están funcionando correctamente.<br>
+                        (El login se implementará en la próxima actualización).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rolSeguridad = localStorage.getItem("rolUsuario");
+
+        // Si el localStorage está vacío (no pasó por el Login), para afuera
+        if (!rolSeguridad) {
+            window.location.replace("/Login");
+        }
+    });
+</script>

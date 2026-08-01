@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Incidentes";
+}
+
+<div style="margin-top: 20px;">
+    <h2 class="mb-4">Gestión de Incidentes</h2>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <input type="hidden" id="txtId" value="0" />
+
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">ID Participante:</label>
+                    <input type="number" id="txtParticipanteID" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">ID Curso:</label>
+                    <input type="number" id="txtCursoID" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Fecha y Hora:</label>
+                    <input type="datetime-local" id="txtFecha" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">ID Usuario (Registro):</label>
+                    <input type="number" id="txtRegistradoPor" class="form-control" />
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <label class="form-label fw-bold">Descripción del Incidente:</label>
+                    <input type="text" id="txtDescripcion" class="form-control" placeholder="Detalles de lo ocurrido..." />
+                </div>
+
+                <div class="col-md-12 mt-4 text-end">
+                    <button type="button" class="btn btn-primary me-2" onclick="Guardar(event)">Guardar / Actualizar</button>
+                    <button type="button" class="btn btn-secondary" onclick="LimpiarFormulario()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover" style="width: 100%; text-align: left;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Participante</th>
+                <th>Curso</th>
+                <th>Fecha</th>
+                <th>Descripción</th>
+                <th>Registrado Por</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-datos"></tbody>
+    </table>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rolSeguridad = localStorage.getItem("rolUsuario");
+
+        // Si no hay ningún rol guardado (no pasó por el Login), lo pateamos
+        if (!rolSeguridad) {
+            window.location.replace("/Login");
+        }
+    });
+</script>
+@section Scripts {
+    <script src="~/js/incidente.js?v=2"></script>
+}

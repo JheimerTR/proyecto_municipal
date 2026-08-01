@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Cursos";
+}
+
+<div style="margin-top: 20px;">
+    <h2 class="mb-4">Gestión de Cursos</h2>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <input type="hidden" id="txtId" value="0" />
+
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Nombre del Curso:</label>
+                    <input type="text" id="txtNombre" class="form-control" placeholder="Ej. Lógica de Programación" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Categoría:</label>
+                    <select id="txtCategoria" class="form-select">
+                        <option value="Deportes">Deportes (Fútbol, Natación, Básquetbol)</option>
+                        <option value="Arte y Cultura">Arte y Cultura (Danza Folclórica, Pintura)</option>
+                        <option value="Música">Música (Guitarra, Instrumentos)</option>
+                        <option value="Nivelación Escolar">Nivelación Escolar (Matemáticas, Lectura)</option>
+                        <option value="Tecnología">Tecnología (Computación Básica)</option>
+                        <option value="Manualidades">Manualidades (Artesanía, Tejido)</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">Cupo Max:</label>
+                    <input type="number" id="txtCupoMaximo" class="form-control" placeholder="Ej. 20" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">ID Instructor:</label>
+                    <input type="number" id="txtInstructorID" class="form-control" />
+                </div>
+
+                <div class="col-md-3 mt-3">
+                    <label class="form-label fw-bold">ID Espacio:</label>
+                    <input type="number" id="txtEspacioID" class="form-control" />
+                </div>
+                <div class="col-md-3 mt-3">
+                    <label class="form-label fw-bold">ID Horario:</label>
+                    <input type="number" id="txtHorarioID" class="form-control" />
+                </div>
+
+                <div class="col-md-6 mt-4 text-end">
+                    <button type="button" class="btn btn-primary me-2" onclick="Guardar(event)">Guardar / Actualizar</button>
+                    <button type="button" class="btn btn-secondary" onclick="LimpiarFormulario()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover" style="width: 100%; text-align: left;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Cupo</th>
+                <th>Instructor ID</th>
+                <th>Espacio ID</th>
+                <th>Horario ID</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-datos"></tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rolSeguridad = localStorage.getItem("rolUsuario");
+
+        // Si no es ni Admin ni Secretaria, para afuera
+        if (rolSeguridad !== "Admin" && rolSeguridad !== "Secretaria") {
+            window.location.replace("/Home");
+        }
+    });
+</script>
+
+@section Scripts {
+    <script src="~/js/curso.js?v=3"></script>
+}

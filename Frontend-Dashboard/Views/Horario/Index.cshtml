@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Horarios";
+}
+
+<div style="margin-top: 20px;">
+    <h2 class="mb-4">Gestión de Horarios</h2>
+
+    <!-- Formulario con diseño Bootstrap (alineado y moderno) -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <input type="hidden" id="txtId" value="0" />
+
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Días de Clase:</label>
+                    <select id="txtDiaSemana" class="form-select">
+                        <option value="Lunes a Viernes">Lunes a Viernes</option>
+                        <option value="Lunes, Miércoles y Viernes">Lunes, Miércoles y Viernes</option>
+                        <option value="Martes y Jueves">Martes y Jueves</option>
+                        <option value="Sábados">Sábados</option>
+                        <option value="Lunes">Solo Lunes</option>
+                        <option value="Martes">Solo Martes</option>
+                        <option value="Miércoles">Solo Miércoles</option>
+                        <option value="Jueves">Solo Jueves</option>
+                        <option value="Viernes">Solo Viernes</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">Hora Inicio:</label>
+                    <input type="time" id="txtHoraInicio" class="form-control" />
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">Hora Fin:</label>
+                    <input type="time" id="txtHoraFin" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary me-2" onclick="Guardar(event)">Guardar / Actualizar</button>
+                    <button type="button" class="btn btn-secondary" onclick="LimpiarFormulario()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla -->
+    <table class="table table-bordered table-striped table-hover" style="width: 100%; text-align: left;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Día(s)</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-datos"></tbody>
+    </table>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rolSeguridad = localStorage.getItem("rolUsuario");
+
+        // Si no es ni Admin ni Secretaria, para afuera
+        if (rolSeguridad !== "Admin" && rolSeguridad !== "Secretaria") {
+            window.location.replace("/Home");
+        }
+    });
+</script>
+@section Scripts {
+    <script src="~/js/horario.js?v=2"></script>
+}
